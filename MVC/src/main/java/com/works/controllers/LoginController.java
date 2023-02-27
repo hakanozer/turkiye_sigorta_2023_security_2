@@ -29,7 +29,7 @@ public class LoginController {
             //}
             return "login";
         }
-        System.out.println(admin);
+        model.addAttribute("password", admin.getPassword());
         return "login";
     }
 

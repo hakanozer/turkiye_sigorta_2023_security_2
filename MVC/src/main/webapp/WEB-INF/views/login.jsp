@@ -16,6 +16,9 @@
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
             <h2>Admin Login</h2>
+            <c:if test="${password != null}">
+                ${password}
+            </c:if>
             <c:if test="${errors != null}">
                 <c:forEach var="item" items="${errors}">
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
