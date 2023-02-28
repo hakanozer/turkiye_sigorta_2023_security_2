@@ -1,18 +1,22 @@
 package com.works.services;
 
 import com.works.entities.Admin;
+import com.works.repositories.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class LoginService {
 
     final DBService dbService;
+    final AdminRepository adminRepository;
+    final TinkEncDec tinkEncDec;
 
     public boolean login(Admin admin) {
         try {
@@ -31,6 +35,19 @@ public class LoginService {
             return rs.next();
         }catch (Exception ex) {
             System.err.println("login error : " + ex);
+        }
+        return false;
+    }
+
+
+    public boolean loginDB( Admin admin ) {
+        Optional<Admin> optionalAdmin = adminRepository.findByEmailEqualsIgnoreCase(admin.getEmail());
+        if ( optionalAdmin.isPresent() ) {
+            Admin adm = optionalAdmin.get();
+            String dbPass = tinkEncDec.decrypt( adm.getPassword() );
+            if (dbPass.equals(admin.getPassword())) {
+                return true;
+            }
         }
         return false;
     }

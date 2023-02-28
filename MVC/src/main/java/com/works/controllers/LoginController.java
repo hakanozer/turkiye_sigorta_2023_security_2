@@ -2,6 +2,7 @@ package com.works.controllers;
 
 import com.works.entities.Admin;
 import com.works.services.LoginService;
+import com.works.services.TinkEncDec;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +19,12 @@ import java.util.List;
 public class LoginController {
 
     final LoginService loginService;
+    final TinkEncDec tinkEncDec;
 
     @GetMapping("/")
     public String login() {
+        String cipherText = tinkEncDec.encrypt("12345");
+        System.out.println( cipherText );
         return "login";
     }
 
@@ -31,7 +35,8 @@ public class LoginController {
             model.addAttribute("errors", errors);
             return "login";
         }
-        boolean status = loginService.login(admin);
+        //boolean status = loginService.login(admin);
+        boolean status = loginService.loginDB(admin);
         if ( status ) {
             return "redirect:/dashboard";
         }
