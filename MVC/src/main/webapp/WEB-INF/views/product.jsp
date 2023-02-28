@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <jsp:include page="inc/navbar.jsp"></jsp:include>
-    <h1>Welcome Dashboard</h1>
+    <h1>Welcome Product</h1>
 </div>
 </body>
 </html>

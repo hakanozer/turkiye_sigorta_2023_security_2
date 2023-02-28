@@ -19,12 +19,9 @@ import java.util.List;
 public class LoginController {
 
     final LoginService loginService;
-    final TinkEncDec tinkEncDec;
 
     @GetMapping("/")
     public String login() {
-        String cipherText = tinkEncDec.encrypt("12345");
-        System.out.println( cipherText );
         return "login";
     }
 
@@ -41,6 +38,12 @@ public class LoginController {
             return "redirect:/dashboard";
         }
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        loginService.logout();
+        return "redirect:/";
     }
 
 }

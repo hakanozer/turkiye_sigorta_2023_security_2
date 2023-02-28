@@ -95,7 +95,27 @@ public class FilterConfig implements Filter {
         long between = end - start;
         System.out.println( between );
 
-        chain.doFilter(request, response);
+        String url = request.getRequestURI();
+        String[] urls = {"/", "/adminLogin"};
+        boolean loginStatus = true;
+        for( String item : urls ) {
+            if (item.equals(url)) {
+                loginStatus = false;
+            }
+        }
+        if (loginStatus) {
+            boolean status = request.getSession().getAttribute("admin") == null;
+            if (status) {
+                response.sendRedirect("/");
+            }else {
+                Admin admin = (Admin) request.getSession().getAttribute("admin");
+                request.setAttribute("admin", admin);
+                chain.doFilter(request, response);
+            }
+        }else {
+            chain.doFilter(request, response);
+        }
+
     }
 
 
