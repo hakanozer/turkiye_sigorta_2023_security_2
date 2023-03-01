@@ -24,7 +24,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // login -> type, role, mapping
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().formLogin().disable();
+        http
+        .httpBasic()
+        .and()
+        .authorizeHttpRequests()
+        .antMatchers("/product/**").hasRole("product")
+        .antMatchers("/note/**").hasRole("note")
+        .and().csrf().disable().formLogin().disable();
     }
 
 }

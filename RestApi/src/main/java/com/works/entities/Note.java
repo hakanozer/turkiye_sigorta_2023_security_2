@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-public class Note {
+public class Note extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
