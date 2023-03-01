@@ -33,5 +33,10 @@ public class ProductRestController {
         return dummyService.auth();
     }
 
+    @GetMapping("/xml")
+    public ResponseEntity xml() {
+        return service.xml();
+    }
+
 
 }
